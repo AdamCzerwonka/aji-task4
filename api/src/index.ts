@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import "express-async-errors";
 
 import { productsRouter } from "./routes/product";
@@ -13,6 +14,7 @@ dotenv.config();
 const app: Express = express();
 const port = parseInt(process.env.PORT || "5000");
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/products", productsRouter);
