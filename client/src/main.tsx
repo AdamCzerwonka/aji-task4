@@ -1,10 +1,27 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ProductsPage from "./pages/products/index.tsx";
+import CartPage from "./pages/cart/index.tsx";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const queryClient = new QueryClient();
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: ProductsPage,
+  },
+  {
+    path: "/cart",
+    Component: CartPage,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </React.StrictMode>
+);
