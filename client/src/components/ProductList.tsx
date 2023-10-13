@@ -1,9 +1,15 @@
 import { FC } from "react";
 import ProductElement from "./ProductElement";
 import { useProducts } from "../data/useProducts";
+import { useCartStore } from "../store/cart";
 
 const ProductList: FC = () => {
   const { products } = useProducts();
+  const { add } = useCartStore();
+
+  const handleAddToCart = (id: number, amount: number) => {
+    add({ id, amount });
+  };
 
   return (
     <>
@@ -14,9 +20,13 @@ const ProductList: FC = () => {
         <div>PRICE</div>
         <div>WEIGHT</div>
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         {products?.map((product) => (
-          <ProductElement product={product} key={product.id} />
+          <ProductElement
+            product={product}
+            onAddToCart={handleAddToCart}
+            key={product.id}
+          />
         ))}
       </div>
     </>

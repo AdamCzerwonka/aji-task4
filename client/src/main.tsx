@@ -5,16 +5,19 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductsPage from "./pages/products/index.tsx";
 import CartPage from "./pages/cart/index.tsx";
+import PageLayout from "./components/PageLayout.tsx";
+import OrderPage from "./pages/order/index.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: ProductsPage,
-  },
-  {
-    path: "/cart",
-    Component: CartPage,
+    Component: PageLayout,
+    children: [
+      { path: "/", Component: ProductsPage },
+      { path: "/cart", Component: CartPage },
+      { path: "/order", Component: OrderPage },
+    ],
   },
 ]);
 

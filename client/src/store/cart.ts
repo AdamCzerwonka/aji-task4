@@ -8,15 +8,14 @@ interface CartEntry {
 interface CartStore {
   items: CartEntry[];
   add: (item: CartEntry) => void;
-  get: () => CartEntry[];
 }
 
 export const useCartStore = create<CartStore>((set) => ({
   items: [],
   add(item) {
-    set({});
-  },
-  get() {
-    return [];
+    // TODO: add some logic
+    set((state) => ({
+      items: [item, ...state.items],
+    }));
   },
 }));
