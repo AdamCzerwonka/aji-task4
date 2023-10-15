@@ -7,7 +7,9 @@ const CartPage: FC = () => {
   return (
     <div>
       {items.map((item) => (
-        <div>{item.id}</div>
+        <div>
+          ID: {item.id}, ammount: {item.amount}
+        </div>
       ))}
     </div>
   );
