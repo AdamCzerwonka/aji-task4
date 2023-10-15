@@ -9,8 +9,8 @@ interface Props {
 
 const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
   return (
-    <div className="border border-black flex flex-col">
-      <h2 className="text-xl font-semibold">{product.name}</h2>
+    <div className="table-product">
+      <div>{product.name}</div>
       <div>{product.description}</div>
       <div>{product.price}$</div>
       <div>{product.weight}</div>

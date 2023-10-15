@@ -13,12 +13,13 @@ const ProductList: FC = () => {
 
   return (
     <>
-      <div>
+      <div className="table-product">
         <div>ID</div>
         <div>NAME</div>
         <div>DESCRIPTION</div>
         <div>PRICE</div>
         <div>WEIGHT</div>
+        <div>ACTION</div>
       </div>
       <div className="flex flex-col gap-2">
         {products?.map((product) => (
