@@ -6,7 +6,7 @@ const Nav: FC = () => {
   const { items } = useCartStore();
 
   return (
-    <div className="flex justify-center bg-gray-100 p-2">
+    <div className="flex justify-center bg-gray-200 p-2">
       <NavLink to={"/"} className="nav-option">
         Products
       </NavLink>

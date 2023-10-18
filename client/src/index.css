@@ -4,10 +4,22 @@
 
 @layer components {
   .nav-option {
-    @apply text-black bg-white rounded-md shadow-md hover:bg-yellow-100 hover:text-gray-800 ease-linear duration-150 p-2 m-2 mr-2 ml-2 uppercase font-bold  text-xl;
+    @apply text-black bg-white rounded-md shadow-md hover:bg-yellow-100 hover:text-gray-800 ease-linear duration-100 p-2 m-2 mr-2 ml-2 uppercase font-bold  text-xl;
   }
 
   .table-product {
     @apply flex flex-row justify-between;
+  }
+
+  .table-cell {
+    @apply basis-1/5 text-center p-2;
+  }
+
+  .table-cell-hover {
+    @apply hover:shadow-sm ease-linear duration-100;
+  }
+
+  .table-button {
+    @apply bg-yellow-100 ease-linear duration-100 hover:bg-yellow-300 px-3 py-1 rounded-md;
   }
 }

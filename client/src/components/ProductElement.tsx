@@ -9,13 +9,19 @@ interface Props {
 
 const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
   return (
-    <div className="table-product">
-      <div>{product.name}</div>
-      <div>{product.description}</div>
-      <div>{product.price}$</div>
-      <div>{product.weight}</div>
-      <div>
-        <Button label="Add" onClick={() => onAddToCart(product.id, 1)} />
+    <div className="flex flex-row border-b border-l border-r table-cell-hover  align-bottom">
+      <div className="table-cell text-left">{product.name}</div>
+      <div className="table-cell text-left basis-full">
+        {product.description}
+      </div>
+      <div className="table-cell">{product.price}$</div>
+      <div className="table-cell">{product.weight}kg</div>
+      <div className="table-cell">
+        <Button
+          className="table-button"
+          label="Add"
+          onClick={() => onAddToCart(product.id, 1)}
+        />
       </div>
     </div>
   );

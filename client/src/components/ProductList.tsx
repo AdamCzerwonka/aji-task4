@@ -13,15 +13,14 @@ const ProductList: FC = () => {
 
   return (
     <>
-      <div className="table-product">
-        <div>ID</div>
-        <div>NAME</div>
-        <div>DESCRIPTION</div>
-        <div>PRICE</div>
-        <div>WEIGHT</div>
-        <div>ACTION</div>
+      <div className="flex flex-row border-b-2 bg-gray-50">
+        <div className="table-cell">NAME</div>
+        <div className="table-cell basis-full">DESCRIPTION</div>
+        <div className="table-cell">PRICE</div>
+        <div className="table-cell">WEIGHT</div>
+        <div className="table-cell">ACTION</div>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         {products?.map((product) => (
           <ProductElement
             product={product}
