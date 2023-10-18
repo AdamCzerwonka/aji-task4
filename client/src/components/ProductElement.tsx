@@ -4,7 +4,7 @@ import Button from "./Button";
 
 interface Props {
   product: Product;
-  onAddToCart: (id: number, amount: number) => void;
+  onAddToCart: (id: number, name: string, amount: number) => void;
 }
 
 const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
@@ -20,7 +20,7 @@ const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
         <Button
           className="table-button"
           label="Add"
-          onClick={() => onAddToCart(product.id, 1)}
+          onClick={() => onAddToCart(product.id, product.name, 1)}
         />
       </div>
     </div>

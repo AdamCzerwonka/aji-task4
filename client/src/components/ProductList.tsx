@@ -7,8 +7,8 @@ const ProductList: FC = () => {
   const { products } = useProducts();
   const { add } = useCartStore();
 
-  const handleAddToCart = (id: number, amount: number) => {
-    add({ id, amount });
+  const handleAddToCart = (id: number, name: string, amount: number) => {
+    add({ id, name, amount });
   };
 
   return (
