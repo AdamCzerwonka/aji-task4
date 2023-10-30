@@ -11,7 +11,7 @@ const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
   return (
     <div className="flex flex-row border-b border-l border-r table-cell-hover  align-bottom">
       <div className="table-cell text-left">{product.name}</div>
-      <div className="table-cell text-left basis-full">
+      <div className="table-cell text-left basis-full break-keep">
         {product.description}
       </div>
       <div className="table-cell">{product.price}$</div>
