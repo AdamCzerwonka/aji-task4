@@ -2,6 +2,7 @@ import { FC } from "react";
 import ProductElement from "./ProductElement";
 import { useProducts } from "../data/useProducts";
 import { useCartStore } from "../store/cart";
+import Filter from "./Filter";
 
 const ProductList: FC = () => {
   const { products } = useProducts();
@@ -13,21 +14,24 @@ const ProductList: FC = () => {
 
   return (
     <>
-      <div className="flex flex-row border-b-2 bg-gray-50">
-        <div className="table-cell">NAME</div>
-        <div className="table-cell basis-full">DESCRIPTION</div>
-        <div className="table-cell">PRICE</div>
-        <div className="table-cell">WEIGHT</div>
-        <div className="table-cell">ACTION</div>
-      </div>
-      <div className="flex flex-col">
-        {products?.map((product) => (
-          <ProductElement
-            product={product}
-            onAddToCart={handleAddToCart}
-            key={product.id}
-          />
-        ))}
+      <Filter />
+      <div className="shadow-sm rounded-md">
+        <div className="flex flex-row border-b-2">
+          <div className="table-cell bg-gray-50">NAME</div>
+          <div className="table-cell basis-full bg-gray-50">DESCRIPTION</div>
+          <div className="table-cell bg-gray-50">PRICE</div>
+          <div className="table-cell bg-gray-50">WEIGHT</div>
+          <div className="table-cell bg-gray-50">ACTION</div>
+        </div>
+        <div className="flex flex-col">
+          {products?.map((product) => (
+            <ProductElement
+              product={product}
+              onAddToCart={handleAddToCart}
+              key={product.id}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
