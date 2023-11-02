@@ -1,6 +1,11 @@
 import { Request, Response, Router } from "express";
-import { z } from "zod";
 import { prisma } from "../utils/db";
+import {
+  OrderInputSchema,
+  OrderUpdateSchema,
+  orderInputSchema,
+  orderUpdateSchema,
+} from "../schema/orderSchema";
 
 export const orderRouter = Router();
 
@@ -8,21 +13,6 @@ orderRouter.get("/", async (req: Request, res: Response) => {
   const orders = await prisma.order.findMany();
   res.json(orders);
 });
-
-const orderInputSchema = z.object({
-  username: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(1),
-  confirmationDate: z.date().optional(),
-  items: z.array(
-    z.object({
-      productId: z.number().min(1),
-      amount: z.number().min(0),
-    })
-  ),
-});
-
-type OrderInputSchema = z.infer<typeof orderInputSchema>;
 
 orderRouter.post(
   "/",
@@ -41,12 +31,6 @@ orderRouter.post(
     res.json(result);
   }
 );
-
-const orderUpdateSchema = z.object({
-  orderStatusId: z.number().min(1).max(4),
-});
-
-type OrderUpdateSchema = z.infer<typeof orderUpdateSchema>;
 
 orderRouter.patch(
   "/:id(\\d+)",
