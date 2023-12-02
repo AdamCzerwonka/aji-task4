@@ -6,6 +6,7 @@ export interface Product {
   description: string;
   price: number;
   weight: number;
+  categoryId: number;
 }
 
 export const useProducts = () => {
