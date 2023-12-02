@@ -3,9 +3,13 @@ import ProductList from "../../components/ProductList";
 
 const ProductsPage: FC = () => {
   return (
-    <div>
-      <ProductList />
-    </div>
+    <>
+      <div className="flex flex-row justify-center ">
+        <div className="w-4/5">
+          <ProductList />
+        </div>
+      </div>
+    </>
   );
 };
 

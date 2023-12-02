@@ -4,7 +4,7 @@ import Nav from "./Nav";
 
 const PageLayout: FC = () => {
   return (
-    <div>
+    <div className="bg-gray-100  w-screen h-screen">
       <Nav />
       <Outlet />
     </div>

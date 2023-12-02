@@ -4,18 +4,24 @@ import Button from "./Button";
 
 interface Props {
   product: Product;
-  onAddToCart: (id: number, amount: number) => void;
+  onAddToCart: (id: number, name: string, amount: number) => void;
 }
 
 const ProductElement: FC<Props> = ({ product, onAddToCart }) => {
   return (
-    <div className="border border-black flex flex-col">
-      <h2 className="text-xl font-semibold">{product.name}</h2>
-      <div>{product.description}</div>
-      <div>{product.price}$</div>
-      <div>{product.weight}</div>
-      <div>
-        <Button label="Add" onClick={() => onAddToCart(product.id, 1)} />
+    <div className="flex flex-row border-b border-l border-r table-cell-hover  align-bottom">
+      <div className="table-cell text-left">{product.name}</div>
+      <div className="table-cell text-left basis-full break-keep">
+        {product.description}
+      </div>
+      <div className="table-cell">{product.price}$</div>
+      <div className="table-cell">{product.weight}kg</div>
+      <div className="table-cell">
+        <Button
+          className="table-button"
+          label="Add"
+          onClick={() => onAddToCart(product.id, product.name, 1)}
+        />
       </div>
     </div>
   );
