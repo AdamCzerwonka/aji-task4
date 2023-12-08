@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useCartStore } from "../../store/cart";
 import Button from "../../components/Button";
 import { Product } from "../../data/useProducts";
+import CartSummary from "../../components/CartSummary";
 
 const CartPage: FC = () => {
   const { items, add, remove } = useCartStore();
@@ -15,8 +16,13 @@ const CartPage: FC = () => {
   };
 
   return (
-    <div className="flex flex-row flex-wrap justify-center">
-      <div className="box-border w-4/5 mt-4 bg-white rounded-md shadow-sm">
+    <div className="flex flex-row flex-wrap justify-center mt-4 gap-3">
+      <div className="box-border w-7/12 bg-white rounded-md shadow-sm h-min">
+        {items.length === 0 && (
+          <div className="font-bold text-center p-5 text-2xl">
+            Cart is empty
+          </div>
+        )}
         {items.map((item) => (
           <div key={item.product.id} className="flex">
             <div className="table-cell basis-4/5 text-left border-l border-b">
@@ -44,6 +50,9 @@ const CartPage: FC = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="w-2/12">
+        <CartSummary />
       </div>
     </div>
   );
