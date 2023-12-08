@@ -6,7 +6,7 @@ import { Category } from "../data/useCategories";
 interface Props {
   product: Product;
   category: Category;
-  onAddToCart: (id: number, name: string, amount: number) => void;
+  onAddToCart: (product: Product, amount: number) => void;
 }
 
 const ProductElement: FC<Props> = ({ product, category, onAddToCart }) => {
@@ -23,7 +23,7 @@ const ProductElement: FC<Props> = ({ product, category, onAddToCart }) => {
         <Button
           className="table-button"
           label="Add"
-          onClick={() => onAddToCart(product.id, product.name, 1)}
+          onClick={() => onAddToCart(product, 1)}
         />
       </div>
     </div>

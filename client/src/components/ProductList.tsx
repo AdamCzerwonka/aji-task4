@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import ProductElement from "./ProductElement";
-import { useProducts } from "../data/useProducts";
+import { Product, useProducts } from "../data/useProducts";
 import { useCartStore } from "../store/cart";
 import { useCategories } from "../data/useCategories";
 
@@ -12,8 +12,8 @@ const ProductList: FC = () => {
   const [categoryFilter, setCategoryFilter] = useState(0);
   const [nameFilter, setNameFilter] = useState("");
 
-  const handleAddToCart = (id: number, name: string, amount: number) => {
-    add({ id, name, amount });
+  const handleAddToCart = (product: Product, amount: number) => {
+    add({ product, amount });
   };
 
   return (

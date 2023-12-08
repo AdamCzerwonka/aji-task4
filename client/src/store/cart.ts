@@ -1,8 +1,8 @@
 import { create } from "zustand";
+import { Product } from "../data/useProducts";
 
 interface CartEntry {
-  id: number;
-  name: string;
+  product: Product;
   amount: number;
 }
 
@@ -30,7 +30,7 @@ const updateItems = (item: CartEntry, cart: CartEntry[]): CartEntry[] => {
   let isOnCart: boolean = false;
 
   cart.map((entry) => {
-    if (entry.id === item.id) {
+    if (entry.product.id === item.product.id) {
       entry.amount += item.amount;
       isOnCart = true;
     }
@@ -47,7 +47,7 @@ const removeItem = (item: CartEntry, cart: CartEntry[]): CartEntry[] => {
   let isToRemove: boolean = false;
 
   cart.map((entry) => {
-    if (entry.id === item.id) {
+    if (entry.product.id === item.product.id) {
       entry.amount -= item.amount;
       if (entry.amount <= 0) {
         isToRemove = true;
@@ -56,7 +56,7 @@ const removeItem = (item: CartEntry, cart: CartEntry[]): CartEntry[] => {
   });
 
   if (isToRemove) {
-    return cart.filter((entry) => entry.id !== item.id);
+    return cart.filter((entry) => entry.product.id !== item.product.id);
   }
   return cart;
 };
