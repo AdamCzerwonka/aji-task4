@@ -6,9 +6,9 @@ import { useCategories } from "../data/useCategories";
 import { Product } from "../types/Product";
 
 const ProductList: FC = () => {
+  const { categories } = useCategories();
   const { products } = useProducts();
   const filteredProducts = products;
-  const { categories } = useCategories();
   const { add } = useCartStore();
   const [categoryFilter, setCategoryFilter] = useState(0);
   const [nameFilter, setNameFilter] = useState("");
