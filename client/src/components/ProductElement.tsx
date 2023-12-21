@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { Product } from "../data/useProducts";
 import Button from "./Button";
-import { Category } from "../data/useCategories";
+import { Category } from "../types/Category";
+import { Product } from "../types/Product";
 
 interface Props {
   product: Product;

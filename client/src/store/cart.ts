@@ -1,10 +1,5 @@
 import { create } from "zustand";
-import { Product } from "../data/useProducts";
-
-interface CartEntry {
-  product: Product;
-  amount: number;
-}
+import { CartEntry } from "../types/CartEntry";
 
 interface CartStore {
   items: CartEntry[];

@@ -4,7 +4,7 @@ export const orderSchema = z.object({
   username: z.string().min(1),
   email: z.string().email(),
   phone: z.string().min(1),
-  confirmationDate: z.date().optional(),
+  confirmationDate: z.date().optional().nullable(),
   items: z.array(
     z.object({
       productId: z.number().min(1),

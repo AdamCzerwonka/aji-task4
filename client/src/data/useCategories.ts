@@ -1,9 +1,5 @@
 import { useQuery } from "react-query";
-
-export interface Category {
-  id: number;
-  name: string;
-}
+import { Category } from "../types/Category";
 
 export const useCategories = () => {
   const { data, isLoading } = useQuery<Category[]>("categories", async () => {

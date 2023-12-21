@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { useCartStore } from "../../store/cart";
 import Button from "../../components/Button";
-import { Product } from "../../data/useProducts";
 import CartSummary from "../../components/CartSummary";
+import PersonalData from "../../components/PersonalData";
+import { Product } from "../../types/Product";
 
 const CartPage: FC = () => {
   const { items, add, remove } = useCartStore();
@@ -53,6 +54,7 @@ const CartPage: FC = () => {
       </div>
       <div className="w-2/12">
         <CartSummary />
+        <PersonalData />
       </div>
     </div>
   );

@@ -1,13 +1,5 @@
 import { useQuery } from "react-query";
-
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  weight: number;
-  categoryId: number;
-}
+import { Product } from "../types/Product";
 
 export const useProducts = () => {
   const { data, isLoading } = useQuery<Product[]>("products", async () => {

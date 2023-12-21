@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
 import ProductElement from "./ProductElement";
-import { Product, useProducts } from "../data/useProducts";
+import { useProducts } from "../data/useProducts";
 import { useCartStore } from "../store/cart";
 import { useCategories } from "../data/useCategories";
+import { Product } from "../types/Product";
 
 const ProductList: FC = () => {
   const { products } = useProducts();
