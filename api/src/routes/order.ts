@@ -4,8 +4,12 @@ import {
   OrderInputSchema,
   OrderUpdateSchema,
   orderInputSchema,
+  orderSchema,
   orderUpdateSchema,
+  orderUpdateStatusSchema,
 } from "../schema/orderSchema";
+import { validate } from "../middleware/validate";
+import { pick, typedKeys } from "../utils/typescript";
 
 export const orderRouter = Router();
 
@@ -16,14 +20,15 @@ orderRouter.get("/", async (req: Request, res: Response) => {
 
 orderRouter.post(
   "/",
+  validate(orderInputSchema),
   async (req: Request<{}, {}, OrderInputSchema>, res: Response) => {
-    const data = orderInputSchema.parse(req.body);
+    const order = req.body;
     const result = await prisma.order.create({
       data: {
         orderStatusId: 1,
-        ...data,
+        ...order,
         items: {
-          create: [...data.items],
+          create: [...order.items],
         },
       },
     });
@@ -34,17 +39,20 @@ orderRouter.post(
 
 orderRouter.patch(
   "/:id(\\d+)",
+  validate(orderUpdateStatusSchema),
   async (
-    req: Request<{ id: string }, {}, OrderUpdateSchema>,
+    req: Request<{ id: string }, {}, orderUpdateStatusSchema>,
     res: Response
   ) => {
     const { id } = req.params;
-    const data = orderUpdateSchema.parse(req.body);
+    const order = req.body;
     const result = await prisma.order.update({
       where: {
         id: +id,
       },
-      data,
+      data: {
+        orderStatusId: order.orderStatusId,
+      },
     });
 
     res.json(result);
