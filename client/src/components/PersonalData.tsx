@@ -1,10 +1,14 @@
 import { FC } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, Message, useForm } from "react-hook-form";
 import { OrderData } from "../types/OrderData";
 import Button from "./Button";
 import { useCartStore } from "../store/cart";
+import { ErrorResponse } from "../types/ErrorResponse";
+import toast, { Toaster } from "react-hot-toast";
 
 const PersonalData: FC = () => {
+  const notify = (msg: Message) => toast.error(msg);
+
   const methods = useForm<OrderData>({
     values: {
       username: "",
@@ -22,22 +26,24 @@ const PersonalData: FC = () => {
       return { productId: product.id, amount };
     });
 
-    console.log("VALUES:");
-    console.log(values);
-
-    const response = await fetch("http://localhost:5000/order", {
+    await fetch("http://localhost:5000/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    });
-
-    console.log("RESPONSE:");
-    console.log(response);
-    console.log(await response.json());
-    console.log("");
-    console.log("");
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log("Error");
+        }
+        return response.json(); // Parse the response body as JSON
+      })
+      .then((data: ErrorResponse[]) => {
+        data.forEach((entry) => {
+          notify(entry.detail);
+        });
+      });
   });
 
   return (
@@ -78,6 +84,7 @@ const PersonalData: FC = () => {
           </form>
         </FormProvider>
       </div>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
 };
