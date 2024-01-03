@@ -5,12 +5,14 @@ export const orderSchema = z.object({
   email: z.string().email(),
   phone: z.string().min(1),
   confirmationDate: z.date().optional().nullable(),
-  items: z.array(
-    z.object({
-      productId: z.number().min(1),
-      amount: z.number().min(0),
-    })
-  ),
+  items: z
+    .array(
+      z.object({
+        productId: z.number().min(1),
+        amount: z.number().min(0),
+      })
+    )
+    .min(1),
 });
 
 export const orderInputSchema = z.object({

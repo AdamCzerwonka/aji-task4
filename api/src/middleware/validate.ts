@@ -23,7 +23,8 @@ export const validate =
 
           if (
             issue.message.includes("String") ||
-            issue.message.includes("Number")
+            issue.message.includes("Number") ||
+            issue.message.includes("Array")
           ) {
             msg =
               issue.path[1] + issue.message.substr(issue.message.indexOf(" "));
