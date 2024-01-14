@@ -40,6 +40,7 @@ const PersonalData: FC = () => {
         return response.json(); // Parse the response body as JSON
       })
       .then((data: ErrorResponse[]) => {
+        console.log(data);
         data.forEach((entry) => {
           notify(entry.detail);
         });

@@ -14,8 +14,8 @@ model Product {
   id          Int         @id @default(autoincrement())
   name        String
   description String
-  price       Decimal
-  weight      Decimal
+  price       Float
+  weight      Float
   category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  Int
   OrderItem   OrderItem[]
@@ -42,6 +42,7 @@ model OrderItem {
   id        Int     @id @default(autoincrement())
   product   Product @relation(fields: [productId], references: [id])
   amount    Int
+  price     Float
   Order     Order   @relation(fields: [orderId], references: [id])
   orderId   Int
   productId Int
