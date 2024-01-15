@@ -5,19 +5,26 @@ interface CartStore {
   items: CartEntry[];
   add: (item: CartEntry) => void;
   remove: (item: CartEntry) => void;
+  clear: () => void;
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
-  items: [],
+  items: JSON.parse(localStorage.getItem("cart") || "[]") as CartEntry[],
   add: (item) => {
     const { items } = get();
     const updatedItems = updateItems(item, items);
     set({ items: updatedItems });
+    localStorage.setItem("cart", JSON.stringify(get().items));
   },
   remove: (item) => {
     const { items } = get();
     const updatedItems = removeItem(item, items);
     set({ items: updatedItems });
+    localStorage.setItem("cart", JSON.stringify(get().items));
+  },
+  clear: () => {
+    set({ items: [] });
+    localStorage.setItem("cart", JSON.stringify(get().items));
   },
 }));
 

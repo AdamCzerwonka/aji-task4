@@ -17,8 +17,8 @@ const ProductElement: FC<Props> = ({ product, category, onAddToCart }) => {
       <div className="table-cell text-left basis-full break-keep">
         {product.description}
       </div>
-      <div className="table-cell">{product.price}$</div>
-      <div className="table-cell">{product.weight}kg</div>
+      <div className="table-cell">{product.price.toFixed(2)} $</div>
+      <div className="table-cell">{product.weight.toFixed(1)} kg</div>
       <div className="table-cell">
         <Button
           className="table-button"

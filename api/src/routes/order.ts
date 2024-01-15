@@ -1,19 +1,17 @@
+import cors from "cors";
 import { Request, Response, Router } from "express";
 import { prisma } from "../utils/db";
 import {
   OrderInputSchema,
-  OrderUpdateSchema,
   orderInputSchema,
-  orderSchema,
-  orderUpdateSchema,
   orderUpdateStatusSchema,
 } from "../schema/orderSchema";
 import { validate } from "../middleware/validate";
-import { pick, typedKeys } from "../utils/typescript";
+import { corsOptions } from "..";
 
 export const orderRouter = Router();
 
-orderRouter.get("/", async (req: Request, res: Response) => {
+orderRouter.get("/", cors(corsOptions), async (req: Request, res: Response) => {
   const orders = await prisma.order.findMany({
     include: {
       items: {
@@ -63,8 +61,9 @@ orderRouter.post(
   }
 );
 
-orderRouter.patch(
+orderRouter.put(
   "/:id(\\d+)",
+  cors(corsOptions),
   validate(orderUpdateStatusSchema),
   async (
     req: Request<{ id: string }, {}, orderUpdateStatusSchema>,
@@ -72,12 +71,22 @@ orderRouter.patch(
   ) => {
     const { id } = req.params;
     const order = req.body;
+    const dbOrder = await prisma.order.findFirst({
+      where: {
+        id: +id,
+      },
+    });
+
+    if (dbOrder?.orderStatusId === 3) {
+      throw new Error("Cannot change canceled order status");
+    }
     const result = await prisma.order.update({
       where: {
         id: +id,
       },
       data: {
         orderStatusId: order.orderStatusId,
+        confirmationDate: order.orderStatusId === 2 ? new Date() : undefined,
       },
     });
 

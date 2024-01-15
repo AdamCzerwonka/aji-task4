@@ -3,15 +3,24 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductsPage from "./pages/products";
-import OrdersPage from "./pages/orders";
+import UnrealisedOrdersPage from "./pages/unrealisedOrders";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MainLayout from "./pages/Layout";
+import OrdersPage from "./pages/orders";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: ProductsPage,
+    Component: MainLayout,
+    children: [
+      {
+        path: "/",
+        Component: ProductsPage,
+      },
+      { path: "/orders", Component: OrdersPage },
+      { path: "/orders/unrealised", Component: UnrealisedOrdersPage },
+    ],
   },
-  { path: "orders", Component: OrdersPage },
 ]);
 
 const queryClient = new QueryClient();

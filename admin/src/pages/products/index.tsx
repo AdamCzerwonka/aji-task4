@@ -52,8 +52,8 @@ const ProductsPage: FC = () => {
                   )?.name
                 }
               </TableHead>
-              <TableCell>{product.price}</TableCell>
-              <TableCell>{product.weight}</TableCell>
+              <TableCell>{product.price.toFixed(2)}$</TableCell>
+              <TableCell>{product.weight.toFixed(1)} kg</TableCell>
               <TableCell>
                 <Button
                   onClick={() => {

@@ -1,50 +1,67 @@
 import { FC } from "react";
 import { FormProvider, Message, useForm } from "react-hook-form";
-import { OrderData } from "../types/OrderData";
 import Button from "./Button";
 import { useCartStore } from "../store/cart";
 import { ErrorResponse } from "../types/ErrorResponse";
 import toast, { Toaster } from "react-hot-toast";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+
+const createOrderSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  email: z.string().email(),
+  phone: z.string().regex(/\d{9}/, "Invalid phone number format"),
+});
+
+type CreateOrderSchema = z.infer<typeof createOrderSchema>;
 
 const PersonalData: FC = () => {
   const notify = (msg: Message) => toast.error(msg);
 
-  const methods = useForm<OrderData>({
+  const methods = useForm<CreateOrderSchema>({
+    resolver: zodResolver(createOrderSchema),
     values: {
       username: "",
       email: "",
       phone: "",
-      confirmationDate: null,
-      items: [],
     },
   });
-  const { register, handleSubmit } = methods;
-  const { items } = useCartStore();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+  const { items, clear } = useCartStore();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (values) => {
-    values.items = items.map(({ product, amount }) => {
-      return { productId: product.id, amount };
-    });
-
-    await fetch("http://localhost:5000/order", {
+    const response = await fetch("http://localhost:5000/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log("Error");
-        }
-        return response.json(); // Parse the response body as JSON
-      })
-      .then((data: ErrorResponse[]) => {
-        console.log(data);
-        data.forEach((entry) => {
-          notify(entry.detail);
-        });
+      body: JSON.stringify({
+        ...values,
+        confirmationDate: undefined,
+        items: items.map(({ product, amount }) => {
+          return { productId: product.id, amount };
+        }),
+      }),
+    });
+
+    if (response.ok) {
+      clear();
+      navigate("/order/success");
+    }
+
+    if (!response.ok) {
+      const errors = (await response.json()) as ErrorResponse[];
+      errors.forEach((error) => {
+        notify(error.detail);
       });
+    }
   });
 
   return (
@@ -60,6 +77,7 @@ const PersonalData: FC = () => {
                 placeholder="Username"
                 className="border-b-[1px] border-black p-1 shadow-sm focus:border-yellow-100"
               />
+              <p className="text-red-600">{errors.username?.message}</p>
             </div>
             <div className="flex flex-col mt-2">
               <label htmlFor="email">Email</label>
@@ -69,6 +87,7 @@ const PersonalData: FC = () => {
                 placeholder="email"
                 className="border-b-[1px] border-black p-1 shadow-sm focus:border-none"
               />
+              <p className="text-red-600">{errors.email?.message}</p>
             </div>
             <div className="flex flex-col mt-2">
               <label htmlFor="phone">Phone</label>
@@ -78,6 +97,7 @@ const PersonalData: FC = () => {
                 placeholder="phone"
                 className="border-b-[1px] border-black p-1 shadow-sm focus:border-yellow-100"
               />
+              <p className="text-red-600">{errors.phone?.message}</p>
             </div>
             <div className="text-right mt-2">
               <Button label="Order" className=" table-button" type="submit" />

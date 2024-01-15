@@ -1,3 +1,4 @@
+import cors from "cors";
 import { Router, Request, Response } from "express";
 import { prisma } from "../utils/db";
 import { validate } from "../middleware/validate";
@@ -9,6 +10,7 @@ import {
   productSchema,
   productUpdateSchema,
 } from "../schema/productSchema";
+import { corsOptions } from "..";
 export const productsRouter = Router();
 
 productsRouter.get("/", async (req, res) => {
@@ -48,6 +50,7 @@ productsRouter.post(
 
 productsRouter.put(
   "/:id(\\d+)",
+  cors(corsOptions),
   validate(productUpdateSchema),
   async (
     req: Request<{ id: string }, {}, ProductUpdateSchema>,

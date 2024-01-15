@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -6,41 +7,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useOrderStatus } from "@/data/orderStatus/useOrderStatus";
+import { useCancelOrder } from "@/data/orders/useCancelOrder";
+import { useRealiseOrder } from "@/data/orders/useRealiseOrder";
 import { useUnrealisedOrders } from "@/data/orders/useUnrealisedOrders";
-import { FC, useState } from "react";
+import { FC } from "react";
 
-const OrdersPage: FC = () => {
-  const { orderStatus } = useOrderStatus();
+const UnrealisedOrdersPage: FC = () => {
   const { unrealisedOrders } = useUnrealisedOrders();
-
-  const [status, setStatus] = useState<number>();
+  const { cancelOrder } = useCancelOrder();
+  const { realiseOrder } = useRealiseOrder();
   return (
     <div>
-      <div className="flex flex-row gap-2">
-        {orderStatus?.map((s) => (
-          <label className="flex flex-row gap-2">
-            <input
-              type="radio"
-              name="category"
-              value={s.id}
-              onChange={(e) => setStatus(+e.target.value)}
-            />
-            {s.name}
-          </label>
-        ))}
-      </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Confirmation date</TableHead>
             <TableHead>Value</TableHead>
             <TableHead>Products</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {unrealisedOrders
-            ?.filter((order) => order.orderStatusId === status)
+            ?.filter((order) => order.orderStatusId === 1)
             .map((order) => (
               <TableRow key={order.id}>
                 <TableCell>
@@ -60,6 +49,19 @@ const OrdersPage: FC = () => {
                     ))}
                   </ul>
                 </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() =>
+                      realiseOrder({
+                        orderId: order.id,
+                        orderStatusId: order.orderStatusId === 1 ? 2 : 4,
+                      })
+                    }
+                  >
+                    Realise
+                  </Button>
+                  <Button onClick={() => cancelOrder(order.id)}>Cancel</Button>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -68,4 +70,4 @@ const OrdersPage: FC = () => {
   );
 };
 
-export default OrdersPage;
+export default UnrealisedOrdersPage;

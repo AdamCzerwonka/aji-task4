@@ -29,7 +29,8 @@ const CartPage: FC = () => {
             <div className="table-cell basis-4/5 text-left border-l border-b">
               {item.product.name}
             </div>
-            <div className="flex justify-end p-2 basis-1/5 border-r border-b">
+
+            <div className="flex items-center justify-end p-2 border-r border-b">
               <Button
                 label="+"
                 className="table-button bg-blue-400 hover:bg-blue-600 w-10 mx-1"
@@ -43,6 +44,9 @@ const CartPage: FC = () => {
                 className="table-button bg-slate-400 hover:bg-slate-600 w-10 mx-1"
                 onClick={() => handleRemoveFromCart(item.product, 1)}
               />
+              <div className="flex justify-center w-32">
+                {`${(item.product.price * item.amount).toFixed(2)} $`}
+              </div>
               <Button
                 label="Remove"
                 className="table-button bg-red-400 hover:bg-red-600 mx-1"
