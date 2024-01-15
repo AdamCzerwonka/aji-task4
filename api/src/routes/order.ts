@@ -80,13 +80,15 @@ orderRouter.put(
     if (dbOrder?.orderStatusId === 3) {
       throw new Error("Cannot change canceled order status");
     }
+
     const result = await prisma.order.update({
       where: {
         id: +id,
       },
       data: {
         orderStatusId: order.orderStatusId,
-        confirmationDate: order.orderStatusId === 2 ? new Date() : undefined,
+        confirmationDate:
+          order.orderStatusId === 2 ? new Date() : dbOrder?.confirmationDate,
       },
     });
 
