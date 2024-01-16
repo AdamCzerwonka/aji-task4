@@ -38,7 +38,9 @@ const UnrealisedOrdersPage: FC = () => {
                 <TableCell>
                   {order.items
                     .flatMap((item) => item.price)
-                    .reduce((prev, curr) => prev + curr, 0)}
+                    .reduce((prev, curr) => prev + curr, 0)
+                    .toFixed(2)}
+                  $
                 </TableCell>
                 <TableCell>
                   <ul className="list-disc">

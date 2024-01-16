@@ -14,7 +14,7 @@ const OrdersPage: FC = () => {
   const { orderStatus } = useOrderStatus();
   const { unrealisedOrders } = useUnrealisedOrders();
 
-  const [status, setStatus] = useState<number>();
+  const [status, setStatus] = useState<number>(2);
   return (
     <div>
       <div className="flex flex-row gap-2">
@@ -25,6 +25,7 @@ const OrdersPage: FC = () => {
               name="category"
               value={s.id}
               onChange={(e) => setStatus(+e.target.value)}
+              defaultChecked={s.id === 2}
             />
             {s.name}
           </label>
@@ -49,7 +50,9 @@ const OrdersPage: FC = () => {
                 <TableCell>
                   {order.items
                     .flatMap((item) => item.price)
-                    .reduce((prev, curr) => prev + curr, 0)}
+                    .reduce((prev, curr) => prev + curr, 0)
+                    .toFixed(2)}
+                  $
                 </TableCell>
                 <TableCell>
                   <ul className="list-disc">

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { FC } from "react";
+import { Toaster } from "react-hot-toast";
 import { NavLink, Outlet } from "react-router-dom";
 
 const MainLayout: FC = () => {
@@ -16,6 +17,7 @@ const MainLayout: FC = () => {
           <NavLink to={"/orders"}>All orders</NavLink>
         </Button>
       </div>
+      <Toaster />
       <Outlet />
     </div>
   );
